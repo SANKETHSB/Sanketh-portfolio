@@ -1,163 +1,140 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
-const stackCategories = [
-  {
-    label: 'LANGUAGES',
-    icon: '⟨/⟩',
-    items: ['JavaScript', 'TypeScript', 'Python', 'C++', 'C#', 'Java', 'PHP'],
-  },
-  {
-    label: 'FRAMEWORKS',
-    icon: '⚙',
-    items: ['React', 'Next.js', 'Angular', 'Vue.js', 'Node.js', 'Flask', 'TailwindCSS'],
-  },
-  {
-    label: 'AI / ML',
-    icon: '🧠',
-    items: ['TensorFlow', 'NumPy', 'Pandas', 'Matplotlib', 'MLflow', 'Plotly'],
-  },
-  {
-    label: 'INFRASTRUCTURE',
-    icon: '☁',
-    items: ['AWS', 'Docker', 'Firebase', 'Vercel', 'Heroku', 'Oracle'],
-  },
-  {
-    label: 'DATA',
-    icon: '⛁',
-    items: ['MongoDB', 'PostgreSQL', 'MySQL', 'SQLite', 'Neo4j', 'MS SQL'],
-  },
-  {
-    label: 'TOOLS',
-    icon: '⚒',
-    items: ['Git', 'GitHub', 'Figma', 'Postman', 'Power BI', 'Unity'],
-  },
+const techItems = [
+  { name: 'JavaScript', category: 'Language' },
+  { name: 'TypeScript', category: 'Language' },
+  { name: 'Python', category: 'Language' },
+  { name: 'C++', category: 'Language' },
+  { name: 'Java', category: 'Language' },
+  { name: 'React', category: 'Framework' },
+  { name: 'Next.js', category: 'Framework' },
+  { name: 'Node.js', category: 'Framework' },
+  { name: 'TailwindCSS', category: 'Framework' },
+  { name: 'TensorFlow', category: 'AI / ML' },
+  { name: 'NumPy', category: 'AI / ML' },
+  { name: 'Pandas', category: 'AI / ML' },
+  { name: 'Matplotlib', category: 'AI / ML' },
+  { name: 'MLflow', category: 'AI / ML' },
+  { name: 'Plotly', category: 'AI / ML' },
+  { name: 'LangChain', category: 'AI / ML' },
+  { name: 'OpenAI', category: 'AI / ML' },
+  { name: 'Docker', category: 'Infra' },
+  { name: 'Firebase', category: 'Infra' },
+  { name: 'Vercel', category: 'Infra' },
+  { name: 'Heroku', category: 'Infra' },
+  { name: 'MongoDB', category: 'Data' },
+  { name: 'PostgreSQL', category: 'Data' },
+  { name: 'MySQL', category: 'Data' },
+  { name: 'SQLite', category: 'Data' },
+  { name: 'MS SQL', category: 'Data' },
+  { name: 'Git', category: 'Tool' },
+  { name: 'GitHub', category: 'Tool' },
+  { name: 'Figma', category: 'Tool' },
+  { name: 'Postman', category: 'Tool' },
+  { name: 'Power BI', category: 'Tool' },
 ];
+
+const categoryColors: Record<string, string> = {
+  'Language': 'hsla(185, 60%, 55%, 0.15)',
+  'Framework': 'hsla(200, 70%, 55%, 0.15)',
+  'AI / ML': 'hsla(160, 60%, 50%, 0.15)',
+  'Infra': 'hsla(270, 50%, 55%, 0.15)',
+  'Data': 'hsla(30, 70%, 55%, 0.15)',
+  'Tool': 'hsla(340, 50%, 55%, 0.15)',
+};
+
+const categoryBorders: Record<string, string> = {
+  'Language': 'hsla(185, 60%, 55%, 0.3)',
+  'Framework': 'hsla(200, 70%, 55%, 0.3)',
+  'AI / ML': 'hsla(160, 60%, 50%, 0.3)',
+  'Infra': 'hsla(270, 50%, 55%, 0.3)',
+  'Data': 'hsla(30, 70%, 55%, 0.3)',
+  'Tool': 'hsla(340, 50%, 55%, 0.3)',
+};
 
 const transition = { type: "spring" as const, stiffness: 100, damping: 20, mass: 1 };
 
-function TechBlade({ item, index }: { item: string; index: number }) {
-  const [hovered, setHovered] = useState(false);
+// Split into two rows for the marquee
+const row1 = techItems.slice(0, Math.ceil(techItems.length / 2));
+const row2 = techItems.slice(Math.ceil(techItems.length / 2));
 
+function FloatingCard({ item, index }: { item: typeof techItems[0]; index: number }) {
   return (
     <motion.div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      animate={{
-        x: hovered ? 12 : 0,
-        rotateY: hovered ? 5 : 0,
+      whileHover={{
+        scale: 1.1,
+        y: -8,
+        rotateZ: Math.random() > 0.5 ? 3 : -3,
       }}
-      transition={{ type: "spring" as const, stiffness: 300, damping: 25 }}
-      className="relative overflow-hidden rounded-lg cursor-default group"
+      transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
+      className="flex-shrink-0 px-5 py-3 rounded-xl cursor-default relative overflow-hidden group"
       style={{
-        background: hovered
-          ? 'linear-gradient(135deg, hsla(185, 60%, 55%, 0.12) 0%, hsla(185, 60%, 55%, 0.02) 100%)'
-          : 'linear-gradient(135deg, hsla(220, 20%, 95%, 0.04) 0%, hsla(220, 20%, 95%, 0) 100%)',
-        border: `1px solid ${hovered ? 'hsla(185, 60%, 55%, 0.35)' : 'hsla(220, 20%, 95%, 0.08)'}`,
-        boxShadow: hovered
-          ? '0 0 25px -5px hsla(185, 60%, 55%, 0.2), inset 0 1px 1px hsla(220, 20%, 95%, 0.1)'
-          : '0 2px 8px -2px rgba(0,0,0,0.3)',
-        padding: '10px 16px',
-        transition: 'background 0.3s, border-color 0.3s, box-shadow 0.3s',
-        perspective: '800px',
+        background: categoryColors[item.category],
+        border: `1px solid ${categoryBorders[item.category]}`,
+        backdropFilter: 'blur(10px)',
       }}
     >
-      {/* Glow sweep */}
-      <motion.div
-        initial={{ x: '-100%' }}
-        animate={{ x: hovered ? '200%' : '-100%' }}
-        transition={{ duration: 0.6 }}
-        className="absolute inset-0 pointer-events-none"
+      {/* Hover glow */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
-          background: 'linear-gradient(90deg, transparent, hsla(185, 60%, 55%, 0.08), transparent)',
-          width: '50%',
+          background: `radial-gradient(circle at center, ${categoryColors[item.category]}, transparent 70%)`,
         }}
       />
-
-      <div className="flex items-center justify-between relative z-10">
-        <div className="flex items-center gap-3">
-          <motion.div
-            animate={{ scale: hovered ? 1 : 0.6, opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.2 }}
-            className="w-1.5 h-1.5 rounded-full bg-primary"
-          />
-          <span className="font-display text-xs tracking-wider text-foreground">
-            {item}
-          </span>
-        </div>
-        <motion.span
-          animate={{ opacity: hovered ? 0.5 : 0, x: hovered ? 0 : -5 }}
-          className="font-display text-[10px] text-primary"
-        >
-          ↗
-        </motion.span>
+      <div className="relative z-10 flex items-center gap-2">
+        <span className="font-display text-xs tracking-wider text-foreground font-medium">
+          {item.name}
+        </span>
+        <span className="font-display text-[9px] tracking-wider text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {item.category}
+        </span>
       </div>
     </motion.div>
   );
 }
 
-function StackCard({ category, catIndex }: { category: typeof stackCategories[0]; catIndex: number }) {
-  const [hovered, setHovered] = useState(false);
+function MarqueeRow({ items, direction = 'left', speed = 30 }: { items: typeof techItems; direction?: 'left' | 'right'; speed?: number }) {
+  // Double the items for seamless loop
+  const doubled = [...items, ...items];
+  const duration = items.length * speed / 10;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ ...transition, delay: catIndex * 0.08 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative overflow-hidden rounded-xl"
-      style={{
-        background: 'linear-gradient(135deg, hsla(220, 20%, 95%, 0.05) 0%, hsla(220, 20%, 95%, 0) 100%)',
-        backdropFilter: 'blur(20px)',
-        border: `1px solid ${hovered ? 'hsla(185, 60%, 55%, 0.25)' : 'hsla(220, 20%, 95%, 0.1)'}`,
-        boxShadow: hovered
-          ? '0 20px 60px -15px rgba(0,0,0,0.6), 0 0 40px -10px hsla(185, 60%, 55%, 0.1), inset 0 1px 1px hsla(220, 20%, 95%, 0.15)'
-          : '0 4px 24px -1px rgba(0,0,0,0.5), inset 0 1px 1px hsla(220, 20%, 95%, 0.1)',
-        transition: 'border-color 0.4s, box-shadow 0.4s, transform 0.4s',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        padding: '28px',
-      }}
-    >
-      {/* Top glow bar */}
+    <div className="relative overflow-hidden py-3">
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(90deg, hsl(var(--background)), transparent)' }} />
+      <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(270deg, hsl(var(--background)), transparent)' }} />
+
       <motion.div
-        animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-        className="absolute top-0 left-0 right-0 h-px origin-left"
-        style={{ background: 'linear-gradient(90deg, transparent, hsl(185, 60%, 55%), transparent)' }}
-      />
-
-      <div className="flex items-center gap-3 mb-6">
-        <span className="text-lg">{category.icon}</span>
-        <h3 className="font-display text-[10px] tracking-[0.3em] text-primary">
-          {category.label}
-        </h3>
-        <div className="flex-1 h-px bg-border/50" />
-        <span className="font-display text-[10px] text-muted-foreground">
-          {category.items.length}
-        </span>
-      </div>
-
-      <div className="space-y-1.5">
-        {category.items.map((item, i) => (
-          <TechBlade key={item} item={item} index={i} />
+        animate={{
+          x: direction === 'left' ? ['0%', '-50%'] : ['-50%', '0%'],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration,
+            ease: "linear",
+          },
+        }}
+        className="flex gap-4"
+      >
+        {doubled.map((item, i) => (
+          <FloatingCard key={`${item.name}-${i}`} item={item} index={i} />
         ))}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
 export default function TechStackSection() {
   return (
     <section id="stack" className="section-spacing px-6 md:px-12">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto mb-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={transition}
-          className="mb-16"
         >
           <span className="font-display text-xs tracking-[0.3em] text-primary uppercase">
             // SYSTEM ARCHITECTURE
@@ -169,13 +146,18 @@ export default function TechStackSection() {
             Production-grade tools and frameworks. Hover to inspect each module.
           </p>
         </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {stackCategories.map((cat, catIndex) => (
-            <StackCard key={cat.label} category={cat} catIndex={catIndex} />
-          ))}
-        </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="space-y-4"
+      >
+        <MarqueeRow items={row1} direction="left" speed={35} />
+        <MarqueeRow items={row2} direction="right" speed={40} />
+      </motion.div>
     </section>
   );
 }
