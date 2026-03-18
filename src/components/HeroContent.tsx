@@ -7,6 +7,16 @@ const transition = { type: "spring" as const, stiffness: 100, damping: 20, mass:
 export default function HeroContent() {
   const [isHovered, setIsHovered] = useState(false);
 
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 4 + 1,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    duration: Math.random() * 15 + 10,
+    delay: Math.random() * 10,
+    opacity: Math.random() * 0.4 + 0.1,
+  }));
+
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-24">
       {/* Animated grid background */}
@@ -28,6 +38,33 @@ export default function HeroContent() {
             background: 'radial-gradient(circle at 50% 50%, transparent 20%, hsl(var(--background)) 70%)',
           }}
         />
+
+        {/* Floating particles */}
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full bg-primary"
+            style={{
+              width: p.size,
+              height: p.size,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              opacity: p.opacity,
+            }}
+            animate={{
+              y: [0, -60, -20, -80, 0],
+              x: [0, 15, -10, 20, 0],
+              opacity: [p.opacity, p.opacity * 2, p.opacity * 0.5, p.opacity * 1.5, p.opacity],
+              scale: [1, 1.3, 0.8, 1.2, 1],
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
       </div>
       {/* Large centered profile photo with hover effects */}
       <motion.div
