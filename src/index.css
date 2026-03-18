@@ -120,6 +120,14 @@
     border-radius: 12px;
   }
 
+  .light .tactile-card {
+    background: linear-gradient(135deg, hsla(210, 30%, 100%, 0.8) 0%, hsla(210, 30%, 98%, 0.6) 100%);
+    border: 1px solid hsla(210, 20%, 80%, 0.5);
+    box-shadow: 
+      0 4px 24px -1px rgba(0,0,0,0.08),
+      inset 0 1px 1px hsla(0, 0%, 100%, 0.8);
+  }
+
   .tactile-card-hover {
     @apply tactile-card transition-all duration-500;
   }
@@ -133,6 +141,13 @@
     transform: translateY(-2px);
   }
 
+  .light .tactile-card-hover:hover {
+    box-shadow: 
+      0 12px 40px -4px rgba(0,0,0,0.12),
+      0 0 30px -5px hsla(185, 65%, 40%, 0.1),
+      inset 0 1px 1px hsla(0, 0%, 100%, 0.9);
+  }
+
   .glow-text {
     text-shadow: 0 0 40px hsla(185, 60%, 55%, 0.3);
   }
@@ -140,6 +155,14 @@
   .gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(185, 60%, 55%), hsl(200, 70%, 65%));
+  }
+
+  .light .gradient-text {
+    background-image: linear-gradient(135deg, hsl(185, 65%, 35%), hsl(200, 70%, 45%));
+  }
+
+  .profile-glow {
+    box-shadow: 0 0 30px -5px hsla(185, 60%, 55%, 0.3);
   }
 
   .section-spacing {
@@ -155,18 +178,6 @@
 
   .terminal-input:focus {
     box-shadow: 0 0 20px -5px hsla(185, 60%, 55%, 0.2);
-  }
-
-  .tech-blade {
-    @apply tactile-card px-4 py-3 transition-all duration-300 cursor-default;
-  }
-
-  .tech-blade:hover {
-    transform: translateX(8px);
-    border-color: hsla(185, 60%, 55%, 0.4);
-    box-shadow: 
-      0 0 20px -5px hsla(185, 60%, 55%, 0.2),
-      inset 0 1px 1px hsla(220, 20%, 95%, 0.1);
   }
 
   .nav-link {
