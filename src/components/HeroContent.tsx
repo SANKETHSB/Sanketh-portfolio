@@ -1,8 +1,58 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import profileImg from '@/assets/profile.jpeg';
 
 const transition = { type: "spring" as const, stiffness: 100, damping: 20, mass: 1 };
+
+const roles = [
+  'Full-Stack Architect',
+  'AI Engineer', 
+  'Web3 Builder',
+  'System Designer',
+  'ML Specialist',
+];
+
+function TypingTerminal() {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+    const speed = isDeleting ? 40 : 80;
+
+    if (!isDeleting && text === currentRole) {
+      const pause = setTimeout(() => setIsDeleting(true), 2000);
+      return () => clearTimeout(pause);
+    }
+
+    if (isDeleting && text === '') {
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setText(isDeleting ? currentRole.slice(0, text.length - 1) : currentRole.slice(0, text.length + 1));
+    }, speed);
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, roleIndex]);
+
+  return (
+    <span className="font-display text-xs tracking-[0.3em] text-muted-foreground uppercase">
+      <span className="text-primary">{'> '}</span>
+      {text}
+      <motion.span
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.6, repeat: Infinity }}
+        className="text-primary ml-0.5"
+      >
+        ▌
+      </motion.span>
+    </span>
+  );
+}
 
 export default function HeroContent() {
   const [isHovered, setIsHovered] = useState(false);
@@ -160,9 +210,7 @@ export default function HeroContent() {
         transition={{ ...transition, delay: 0.9 }}
         className="mb-6"
       >
-        <span className="font-display text-xs tracking-[0.3em] text-muted-foreground uppercase">
-          Full-Stack Architect · AI Engineer · Web3 Builder
-        </span>
+        <TypingTerminal />
       </motion.div>
 
       <motion.p
