@@ -210,9 +210,7 @@ export default function HeroContent() {
         transition={{ ...transition, delay: 0.9 }}
         className="mb-6"
       >
-        <span className="font-display text-xs tracking-[0.3em] text-muted-foreground uppercase">
-          Full-Stack Architect · AI Engineer · Web3 Builder
-        </span>
+        <TypingTerminal />
       </motion.div>
 
       <motion.p
