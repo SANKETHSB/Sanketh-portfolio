@@ -9,10 +9,10 @@ const projects = [
     status: 'DEPLOYED',
   },
   {
-    title: 'RAG & LLM Platform',
+    title: 'AI Website Builder',
     category: 'GENERATIVE AI',
-    description: 'Retrieval-Augmented Generation system with custom LLM fine-tuning, vector search, and context-aware response generation at scale.',
-    tech: ['Python', 'LangChain', 'OpenAI', 'Pinecone'],
+    description: 'Build your own website of choice based on input — an intelligent website builder that generates responsive sites from natural language prompts.',
+    tech: ['React', 'Next.js', 'OpenAI', 'TailwindCSS'],
     status: 'IN PRODUCTION',
   },
   {
