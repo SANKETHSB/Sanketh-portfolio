@@ -6,43 +6,11 @@ const transition = { type: "spring" as const, stiffness: 100, damping: 20, mass:
 export default function HeroContent() {
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-      {/* Animated Profile Photo */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5, rotateY: 90 }}
-        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-        transition={{ ...transition, delay: 0.5 }}
-        className="mb-8 relative"
-      >
-        <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-primary/30 profile-glow">
-          <img
-            src={profileImg}
-            alt="Sanket Biradar"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 rounded-full" style={{
-            background: 'radial-gradient(circle, transparent 60%, hsl(230, 30%, 8%) 100%)',
-          }} />
-        </div>
-        {/* Orbiting ring */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-[-8px] rounded-full border border-primary/20"
-          style={{ borderStyle: 'dashed' }}
-        />
-        {/* Status dot */}
-        <motion.div
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-primary border-2 border-background"
-        />
-      </motion.div>
-
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ...transition, delay: 0.8 }}
-        className="mb-4"
+        transition={{ ...transition, delay: 0.5 }}
+        className="mb-6"
       >
         <span className="font-display text-xs tracking-[0.3em] text-muted-foreground uppercase">
           Full-Stack Architect · AI Engineer · Web3 Builder
@@ -52,14 +20,49 @@ export default function HeroContent() {
       <motion.h1
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ...transition, delay: 1 }}
+        transition={{ ...transition, delay: 0.8 }}
         className="font-display font-bold tracking-tighter leading-none mb-8"
-        style={{ fontSize: 'clamp(2.5rem, 8vw, 10rem)', textWrap: 'balance' }}
+        style={{ fontSize: 'clamp(2rem, 6vw, 7rem)', textWrap: 'balance' }}
       >
         <span className="text-foreground">SANKET</span>
-        <br />
-        <span className="gradient-text">BIRADAR</span>
+        <span className="gradient-text ml-4">BIRADAR</span>
       </motion.h1>
+
+      {/* Large centered profile photo */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5, rotateY: 90 }}
+        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+        transition={{ ...transition, delay: 1 }}
+        className="mb-10 relative"
+      >
+        <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-2 border-primary/40 profile-glow">
+          <img
+            src={profileImg}
+            alt="Sanket Biradar"
+            className="w-full h-full object-cover object-top"
+            style={{ filter: 'contrast(1.05) brightness(1.05)' }}
+          />
+        </div>
+        {/* Orbiting ring 1 */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-[-12px] rounded-full border border-primary/20"
+          style={{ borderStyle: 'dashed' }}
+        />
+        {/* Orbiting ring 2 */}
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-[-24px] rounded-full border border-primary/10"
+        />
+        {/* Status dot */}
+        <motion.div
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-primary border-2 border-background"
+        />
+      </motion.div>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
@@ -85,11 +88,6 @@ export default function HeroContent() {
         <div>
           <span className="text-primary glow-text text-lg font-bold">40ms</span>
           <p className="mt-1">Avg Latency</p>
-        </div>
-        <div className="w-px bg-border" />
-        <div>
-          <span className="text-primary glow-text text-lg font-bold">ZKP</span>
-          <p className="mt-1">Zero-Knowledge</p>
         </div>
       </motion.div>
 
