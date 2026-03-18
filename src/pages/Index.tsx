@@ -1,6 +1,4 @@
-import { Suspense } from 'react';
 import Navigation from '@/components/Navigation';
-import HeroScene from '@/components/HeroScene';
 import HeroContent from '@/components/HeroContent';
 import ProjectsSection from '@/components/ProjectsSection';
 import TechStackSection from '@/components/TechStackSection';
@@ -14,9 +12,6 @@ const Index = () => {
 
       {/* Hero */}
       <section className="relative min-h-screen">
-        <Suspense fallback={<div className="absolute inset-0 bg-background" />}>
-          <HeroScene />
-        </Suspense>
         <HeroContent />
       </section>
 
