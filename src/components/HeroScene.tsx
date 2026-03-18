@@ -248,23 +248,27 @@ function CursorLight() {
 }
 
 export default function HeroScene() {
+  const isLight = useIsLightTheme();
+  const bgColor = isLight ? '#f0f4f8' : '#121b2a';
+  
   return (
     <div className="absolute inset-0 z-0">
       <Canvas
         camera={{ position: [0, 0, 7], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 1.5]}
+        key={isLight ? 'light' : 'dark'}
       >
-        <color attach="background" args={['hsl(230, 30%, 8%)']} />
-        <fog attach="fog" args={['hsl(230, 30%, 8%)', 5, 30]} />
-        <ambientLight intensity={0.15} />
-        <directionalLight position={[5, 5, 5]} intensity={0.4} />
+        <color attach="background" args={[bgColor]} />
+        <fog attach="fog" args={[bgColor, 5, 30]} />
+        <ambientLight intensity={isLight ? 0.4 : 0.15} />
+        <directionalLight position={[5, 5, 5]} intensity={isLight ? 0.8 : 0.4} />
         <ScrollSync />
         <CursorLight />
         <NeuralCore />
         <ShardField />
         <Particles />
-        <Environment preset="night" />
+        <Environment preset={isLight ? "apartment" : "night"} />
       </Canvas>
     </div>
   );
