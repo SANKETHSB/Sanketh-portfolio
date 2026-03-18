@@ -9,6 +9,26 @@ export default function HeroContent() {
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-24">
+      {/* Animated grid background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: `
+              linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+            animation: 'grid-drift 20s linear infinite',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at 50% 50%, transparent 20%, hsl(var(--background)) 70%)',
+          }}
+        />
+      </div>
       {/* Large centered profile photo with hover effects */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
