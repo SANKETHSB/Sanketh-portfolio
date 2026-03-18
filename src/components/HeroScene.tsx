@@ -3,6 +3,19 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
+function useIsLightTheme() {
+  const [isLight, setIsLight] = useState(false);
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsLight(document.documentElement.classList.contains('light'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    setIsLight(document.documentElement.classList.contains('light'));
+    return () => observer.disconnect();
+  }, []);
+  return isLight;
+}
+
 function useScrollProgress() {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
