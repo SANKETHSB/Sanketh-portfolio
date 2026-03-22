@@ -126,7 +126,9 @@ export default function HeroContent() {
             }}
           />
         ))}
-      </div>
+      </motion.div>
+      {/* Main content with scroll parallax */}
+      <motion.div style={{ y: heroY, opacity: heroOpacity, scale: heroScale }} className="flex flex-col items-center">
       {/* Large centered profile photo with hover effects */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
@@ -272,6 +274,8 @@ export default function HeroContent() {
           <span className="text-primary glow-text text-lg font-bold">40ms</span>
           <p className="mt-1">Avg Latency</p>
         </div>
+      </motion.div>
+
       </motion.div>
 
       <motion.div
