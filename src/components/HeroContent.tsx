@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import profileImg from '@/assets/profile.jpeg';
 
 const transition = { type: "spring" as const, stiffness: 100, damping: 20, mass: 1 };
@@ -56,6 +56,17 @@ function TypingTerminal() {
 
 export default function HeroContent() {
   const [isHovered, setIsHovered] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.85]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
   const particles = Array.from({ length: 30 }, (_, i) => ({
     id: i,
@@ -68,9 +79,9 @@ export default function HeroContent() {
   }));
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-24">
-      {/* Animated grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div ref={heroRef} className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-24" style={{ perspective: '1000px' }}>
+      {/* Animated grid background with parallax */}
+      <motion.div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ y: bgY }}>
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
