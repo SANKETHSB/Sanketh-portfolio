@@ -223,10 +223,33 @@ export default function HeroContent() {
         and Web3 infrastructure. Optimized for performance, built for the next web.
       </motion.p>
 
-      <motion.div
+      {/* Resume Download Button */}
+      <motion.a
+        href="/resume.pdf"
+        download
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...transition, delay: 1.3 }}
+        whileHover={{ scale: 1.05, y: -3 }}
+        whileTap={{ scale: 0.97 }}
+        className="relative font-display text-xs tracking-[0.2em] uppercase px-8 py-3 rounded-lg border border-primary/40 text-primary overflow-hidden group cursor-pointer mb-8"
+      >
+        <motion.span
+          className="absolute inset-0 bg-primary/10"
+          initial={{ x: '-100%' }}
+          whileHover={{ x: '0%' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+        />
+        <span className="relative z-10 flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </span>
+      </motion.a>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...transition, delay: 1.5 }}
         className="flex gap-8 font-display text-xs tracking-wider text-muted-foreground"
       >
         <div>
